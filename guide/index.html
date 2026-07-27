@@ -37,9 +37,15 @@
     margin-bottom: 18px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06);
   }
-  .block h2 { font-size: 16px; margin-bottom: 4px; }
+  .block h2 {
+    font-size: 16px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
   .block h2 .num { color: var(--accent); margin-right: 6px; }
   .block .guide { font-size: 12.5px; color: var(--sub); margin-bottom: 14px; }
+  .block .cta { margin: 16px 0 0; }
 
   .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
@@ -91,8 +97,7 @@
   .opttable .p { text-align: right; font-weight: 700; white-space: nowrap; }
   .opttable .p .taxin { font-size: 11px; font-weight: 400; color: var(--sub); }
 
-  .sep3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  @media (max-width: 640px) { .sep3 { grid-template-columns: 1fr; } }
+  .seplist { display: grid; grid-template-columns: 1fr; gap: 10px; }
   .sepbox {
     border: 2px solid var(--line);
     border-radius: 10px;
@@ -156,9 +161,8 @@
         <div class="taxin">税込 29,700円</div>
       </div>
     </div>
+    <a class="cta" href="../">料金シミュレーション</a>
   </div>
-
-  <a class="cta" href="../">料金シミュレーションを試す</a>
 
   <div class="block">
     <h2><span class="num">02.</span>料金体系</h2>
@@ -180,15 +184,15 @@
       </thead>
       <tbody>
         <tr><td class="fmt">Vlog型<span class="cond">｜新規台本・新規素材撮影</span></td><td><span class="arrow">→</span>A. 台本（新規）× 素材（新規）</td></tr>
-        <tr><td class="fmt">Vlog型<span class="cond">｜新規台本・素材流用</span></td><td><span class="arrow">→</span>B. 台本（新規）× 素材（横展開）</td></tr>
-        <tr><td class="fmt">Vlog型<span class="cond">｜横展開台本・新規素材撮影</span></td><td><span class="arrow">→</span>C. 台本（横展開）× 素材（新規）</td></tr>
-        <tr><td class="fmt">Vlog型<span class="cond">｜横展開台本・素材流用</span></td><td><span class="arrow">→</span>D. 台本（横展開）× 素材（横展開）</td></tr>
+        <tr><td class="fmt">Vlog型<span class="cond">｜新規台本・既存素材</span></td><td><span class="arrow">→</span>B. 台本（新規）× 素材（横展開）</td></tr>
+        <tr><td class="fmt">Vlog型<span class="cond">｜台本横展開・新規素材撮影</span></td><td><span class="arrow">→</span>C. 台本（横展開）× 素材（新規）</td></tr>
+        <tr><td class="fmt">Vlog型<span class="cond">｜台本横展開・既存素材</span></td><td><span class="arrow">→</span>D. 台本（横展開）× 素材（横展開）</td></tr>
         <tr><td class="fmt">カメラ語り型<span class="cond">｜新規台本</span></td><td><span class="arrow">→</span>B. 台本（新規）× 素材（横展開）</td></tr>
-        <tr><td class="fmt">カメラ語り型<span class="cond">｜横展開台本</span></td><td><span class="arrow">→</span>D. 台本（横展開）× 素材（横展開）</td></tr>
+        <tr><td class="fmt">カメラ語り型<span class="cond">｜台本横展開</span></td><td><span class="arrow">→</span>D. 台本（横展開）× 素材（横展開）</td></tr>
         <tr><td class="fmt">素材組み合わせ型<span class="cond">｜新規台本・新規素材撮影</span></td><td><span class="arrow">→</span>A. 台本（新規）× 素材（新規）</td></tr>
-        <tr><td class="fmt">素材組み合わせ型<span class="cond">｜新規台本・素材流用</span></td><td><span class="arrow">→</span>B. 台本（新規）× 素材（横展開）</td></tr>
-        <tr><td class="fmt">素材組み合わせ型<span class="cond">｜横展開台本・新規素材撮影</span></td><td><span class="arrow">→</span>C. 台本（横展開）× 素材（新規）</td></tr>
-        <tr><td class="fmt">素材組み合わせ型<span class="cond">｜横展開台本・素材流用</span></td><td><span class="arrow">→</span>D. 台本（横展開）× 素材（横展開）</td></tr>
+        <tr><td class="fmt">素材組み合わせ型<span class="cond">｜新規台本・既存素材</span></td><td><span class="arrow">→</span>B. 台本（新規）× 素材（横展開）</td></tr>
+        <tr><td class="fmt">素材組み合わせ型<span class="cond">｜台本横展開・新規素材撮影</span></td><td><span class="arrow">→</span>C. 台本（横展開）× 素材（新規）</td></tr>
+        <tr><td class="fmt">素材組み合わせ型<span class="cond">｜台本横展開・既存素材</span></td><td><span class="arrow">→</span>D. 台本（横展開）× 素材（横展開）</td></tr>
       </tbody>
     </table>
     <div class="fnote">※カメラ語り型は貴社での素材撮影を想定しております。</div>
@@ -197,12 +201,12 @@
 
   <div class="block">
     <h2><span class="num">04.</span>特殊表現</h2>
-    <div class="sep3">
-      <div class="sepbox"><b>AIコンテンツ型</b><br><span class="d">生成AI素材による表現コンテンツ</span></div>
-      <div class="sepbox"><b>ショートドラマ型</b><br><span class="d">演者2名以上によるドラマ表現コンテンツ</span></div>
-      <div class="sepbox"><b>コント型</b><br><span class="d">演者1名以上によるコント風表現コンテンツ</span></div>
+    <div class="guide">お見積もり含め適宜ご相談ください。</div>
+    <div class="seplist">
+      <div class="sepbox"><b>AIコンテンツ型</b><span class="d">｜生成AI素材による表現コンテンツ</span></div>
+      <div class="sepbox"><b>ショートドラマ型</b><span class="d">｜演者2名以上によるドラマ表現コンテンツ</span></div>
+      <div class="sepbox"><b>コント型</b><span class="d">｜演者1名以上によるコント風表現コンテンツ</span></div>
     </div>
-    <div class="fnote">お見積もり含め適宜ご相談ください。</div>
   </div>
 
   <div class="block">
@@ -218,8 +222,8 @@
   <div class="block">
     <h2><span class="num">06.</span>納品仕様</h2>
     <ul class="terms">
-      <li><b>冒頭パターン</b><br><span class="d">冒頭は3パターン納品が標準となります。審査落ち対策などで5パターン作成から始めるため、そのまま5冒頭を納品する場合があります。</span></li>
-      <li><b>修正対応</b><br><span class="d">納品前は3ラリーまで無償で修正対応いたします。貴社都合、納品後の修正依頼はオプション対応になる場合があります。</span></li>
+      <li><b>冒頭パターン</b><br><span class="d">冒頭は3パターン納品が標準となります。<br>審査落ち対策などで5パターン作成から始めるため、そのまま5冒頭を納品する場合があります。</span></li>
+      <li><b>修正対応</b><br><span class="d">納品前は3ラリーまで無償で修正対応いたします。<br>貴社都合、納品後の修正依頼はオプション対応になる場合があります。</span></li>
     </ul>
   </div>
 

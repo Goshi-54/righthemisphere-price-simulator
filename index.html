@@ -311,15 +311,15 @@
   // 出所: 料金体系（社内一括版）「3. フォーマット対応早見表」
   const FORMATS = [
     { fmt: "Vlog型", cond: "新規台本・新規素材撮影", pat: 0 },
-    { fmt: "Vlog型", cond: "新規台本・素材流用",     pat: 1 },
-    { fmt: "Vlog型", cond: "横展開台本・新規素材撮影", pat: 2 },
-    { fmt: "Vlog型", cond: "横展開台本・素材流用",   pat: 3 },
+    { fmt: "Vlog型", cond: "新規台本・既存素材",     pat: 1 },
+    { fmt: "Vlog型", cond: "台本横展開・新規素材撮影", pat: 2 },
+    { fmt: "Vlog型", cond: "台本横展開・既存素材",   pat: 3 },
     { fmt: "カメラ語り型", cond: "新規台本",   pat: 1 },
-    { fmt: "カメラ語り型", cond: "横展開台本", pat: 3 },
+    { fmt: "カメラ語り型", cond: "台本横展開", pat: 3 },
     { fmt: "素材組み合わせ型", cond: "新規台本・新規素材撮影", pat: 0 },
-    { fmt: "素材組み合わせ型", cond: "新規台本・素材流用",     pat: 1 },
-    { fmt: "素材組み合わせ型", cond: "横展開台本・新規素材撮影", pat: 2 },
-    { fmt: "素材組み合わせ型", cond: "横展開台本・素材流用",   pat: 3 },
+    { fmt: "素材組み合わせ型", cond: "新規台本・既存素材",     pat: 1 },
+    { fmt: "素材組み合わせ型", cond: "台本横展開・新規素材撮影", pat: 2 },
+    { fmt: "素材組み合わせ型", cond: "台本横展開・既存素材",   pat: 3 },
   ];
   const FIX_PRICE = 5000, EDIT_PRICE = 8000;
   const qtys = [0, 0, 0, 0];
