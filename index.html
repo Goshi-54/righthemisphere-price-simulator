@@ -252,8 +252,8 @@
     </div>
 
     <div class="block">
-      <h2><span class="num">04.</span>オプション（別枠）</h2>
-      <div class="guide">通常制作とは別枠の制作オプションです。必要な場合のみ本数を入れてください。</div>
+      <h2><span class="num">04.</span>イレギュラーオプション</h2>
+      <div class="guide">イレギュラー制作オプションです。必要な場合のみ本数を入れてください。</div>
       <div class="numrow">
         <div class="numfield">
           <div class="label">動画編集単体</div>
@@ -286,7 +286,7 @@
       <div class="rsec">制作費</div>
       <div id="rPatterns"></div>
       <div class="rrow"><span class="label" id="rAdjLabel">調整</span><span class="val" id="rAdj">−</span></div>
-      <div class="rsec">オプション（別枠）</div>
+      <div class="rsec">イレギュラーオプション</div>
       <div class="rrow"><span class="label">動画編集単体</span><span class="val" id="rEdit">−</span></div>
       <div class="rrow"><span class="label">納品後修正・追加編集</span><span class="val" id="rFix">−</span></div>
       <div class="rrow total"><span class="label">合計</span><span class="val" id="rEx">−</span></div>
@@ -310,14 +310,16 @@
   ];
   // 出所: 料金体系（社内一括版）「3. フォーマット対応早見表」
   const FORMATS = [
-    { fmt: "Vlog型", cond: "新規台本・素材流用",     pat: 1 },
     { fmt: "Vlog型", cond: "新規台本・新規素材撮影", pat: 0 },
-    { fmt: "Vlog型", cond: "横展開台本・素材流用",   pat: 3 },
+    { fmt: "Vlog型", cond: "新規台本・素材流用",     pat: 1 },
     { fmt: "Vlog型", cond: "横展開台本・新規素材撮影", pat: 2 },
+    { fmt: "Vlog型", cond: "横展開台本・素材流用",   pat: 3 },
     { fmt: "カメラ語り型", cond: "新規台本",   pat: 1 },
     { fmt: "カメラ語り型", cond: "横展開台本", pat: 3 },
-    { fmt: "素材組み合わせ型", cond: "新規台本",   pat: 1 },
-    { fmt: "素材組み合わせ型", cond: "横展開台本", pat: 3 },
+    { fmt: "素材組み合わせ型", cond: "新規台本・新規素材撮影", pat: 0 },
+    { fmt: "素材組み合わせ型", cond: "新規台本・素材流用",     pat: 1 },
+    { fmt: "素材組み合わせ型", cond: "横展開台本・新規素材撮影", pat: 2 },
+    { fmt: "素材組み合わせ型", cond: "横展開台本・素材流用",   pat: 3 },
   ];
   const FIX_PRICE = 5000, EDIT_PRICE = 8000;
   const qtys = [0, 0, 0, 0];
@@ -403,7 +405,7 @@
     const edit = Math.max(0, Number(document.getElementById("edit").value) || 0);
     const fix = Math.max(0, Number(document.getElementById("fix").value) || 0);
     if (edit || fix) {
-      lines.push("■オプション（別枠）");
+      lines.push("■イレギュラーオプション");
       if (edit) lines.push(`・動画編集単体｜${edit}本`);
       if (fix) lines.push(`・納品後修正・追加編集｜${fix}本`);
     }
