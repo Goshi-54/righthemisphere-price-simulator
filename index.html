@@ -186,6 +186,22 @@
   .rrow.grand .val { font-size: 24px; color: var(--accent); }
   .result .notes { font-size: 10.5px; color: var(--sub); padding: 10px 18px 16px; border-top: 1px solid var(--line); margin-top: 12px; }
   .result .notes li { list-style: none; margin-top: 3px; }
+  .copybtn {
+    display: block;
+    width: calc(100% - 36px);
+    margin: 14px 18px 4px;
+    padding: 10px 0;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .copybtn:hover { background: var(--accent-bg); }
+  .copybtn.done { background: var(--accent); color: #fff; }
 </style>
 </head>
 <body>
@@ -274,6 +290,7 @@
       <div class="rrow"><span class="label">消費税（10%）</span><span class="val" id="rTax">−</span></div>
       <div class="rrow grand"><span class="label">合計（税込）</span><span class="val" id="rIn">−</span></div>
     </div>
+    <button class="copybtn" id="copyBtn">入力内容をコピー</button>
     <ul class="notes">
       <li>※ 2分以上の動画や、文字数・秒数の指定がある場合は、その分の倍率調整が入ります。</li>
     </ul>
@@ -369,6 +386,50 @@
   ["edit", "fix", "rate"].forEach(id => {
     document.getElementById(id).addEventListener("input", render);
   });
+
+  function buildCopyText() {
+    const lines = [];
+    const selected = PATTERNS.map((p, i) => ({ p, q: qtys[i] })).filter(x => x.q > 0);
+    if (selected.length) {
+      lines.push("■制作パターン");
+      selected.forEach(x => lines.push(`・${x.p.name}｜${x.q}本`));
+    }
+    const rate = Number(document.getElementById("rate").value) || 0;
+    if (rate) lines.push(`■調整率｜${rate > 0 ? "＋" : "−"}${Math.abs(rate)}%`);
+    const edit = Math.max(0, Number(document.getElementById("edit").value) || 0);
+    const fix = Math.max(0, Number(document.getElementById("fix").value) || 0);
+    if (edit || fix) {
+      lines.push("■オプション（別枠）");
+      if (edit) lines.push(`・動画編集単体｜${edit}本`);
+      if (fix) lines.push(`・納品後修正・追加編集｜${fix}本`);
+    }
+    return lines.join("\n");
+  }
+
+  const copyBtn = document.getElementById("copyBtn");
+  copyBtn.onclick = () => {
+    const text = buildCopyText();
+    const done = (msg) => {
+      copyBtn.textContent = msg;
+      copyBtn.classList.add("done");
+      setTimeout(() => { copyBtn.textContent = "入力内容をコピー"; copyBtn.classList.remove("done"); }, 1500);
+    };
+    if (!text) { done("コピーする内容がありません"); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => done("コピーしました"), () => fallbackCopy(text, done));
+    } else {
+      fallbackCopy(text, done);
+    }
+  };
+  function fallbackCopy(text, done) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    done("コピーしました");
+  }
 
   function render() {
     document.querySelectorAll("#patterns .card").forEach((el, i) => el.classList.toggle("on", qtys[i] > 0));
