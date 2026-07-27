@@ -77,6 +77,7 @@
   }
   .card.on .check { background: var(--accent); border-color: var(--accent); }
   .card .name { font-weight: 700; font-size: 14px; padding-right: 26px; }
+  .card .name .plab { color: var(--accent); }
   .card .desc { font-size: 12px; color: var(--sub); margin: 2px 0 8px; }
   .card .price { font-size: 20px; font-weight: 700; }
   .card .price .unit { font-size: 11px; font-weight: 400; color: var(--sub); margin-left: 2px; }
@@ -298,22 +299,23 @@
 </div>
 
 <script>
+  // 並び順=料金の高い順（A→D）
   const PATTERNS = [
-    { name: "台本（横展開）× 素材（横展開）", short: "横展開 × 横展開", desc: "過去台本の展開＋既存素材で制作", price: 27000 },
-    { name: "台本（横展開）× 素材（新規）",   short: "横展開 × 新規",   desc: "過去台本の展開＋新規素材撮影", price: 47000 },
-    { name: "台本（新規）× 素材（横展開）",   short: "新規 × 横展開",   desc: "新規台本＋既存素材で制作",     price: 57000 },
-    { name: "台本（新規）× 素材（新規）",     short: "新規 × 新規",     desc: "新規台本＋新規素材撮影",       price: 77000 },
+    { letter: "A", name: "台本（新規）× 素材（新規）",     short: "新規 × 新規",     desc: "新規台本＋新規素材撮影",       price: 77000 },
+    { letter: "B", name: "台本（新規）× 素材（横展開）",   short: "新規 × 横展開",   desc: "新規台本＋既存素材で制作",     price: 57000 },
+    { letter: "C", name: "台本（横展開）× 素材（新規）",   short: "横展開 × 新規",   desc: "過去台本の展開＋新規素材撮影", price: 47000 },
+    { letter: "D", name: "台本（横展開）× 素材（横展開）", short: "横展開 × 横展開", desc: "過去台本の展開＋既存素材で制作", price: 27000 },
   ];
   // 出所: 料金体系（社内一括版）「3. フォーマット対応早見表」
   const FORMATS = [
-    { fmt: "Vlog型", cond: "新規台本・素材流用",     pat: 2 },
-    { fmt: "Vlog型", cond: "新規台本・新規素材撮影", pat: 3 },
-    { fmt: "Vlog型", cond: "横展開台本・素材流用",   pat: 0 },
-    { fmt: "Vlog型", cond: "横展開台本・新規素材撮影", pat: 1 },
-    { fmt: "素材組み合わせ型", cond: "新規台本",   pat: 2 },
-    { fmt: "素材組み合わせ型", cond: "横展開台本", pat: 0 },
-    { fmt: "カメラ語り型", cond: "新規台本",   pat: 2 },
-    { fmt: "カメラ語り型", cond: "横展開台本", pat: 0 },
+    { fmt: "Vlog型", cond: "新規台本・素材流用",     pat: 1 },
+    { fmt: "Vlog型", cond: "新規台本・新規素材撮影", pat: 0 },
+    { fmt: "Vlog型", cond: "横展開台本・素材流用",   pat: 3 },
+    { fmt: "Vlog型", cond: "横展開台本・新規素材撮影", pat: 2 },
+    { fmt: "素材組み合わせ型", cond: "新規台本",   pat: 1 },
+    { fmt: "素材組み合わせ型", cond: "横展開台本", pat: 3 },
+    { fmt: "カメラ語り型", cond: "新規台本",   pat: 1 },
+    { fmt: "カメラ語り型", cond: "横展開台本", pat: 3 },
   ];
   const FIX_PRICE = 5000, EDIT_PRICE = 8000;
   const qtys = [0, 0, 0, 0];
@@ -325,7 +327,7 @@
     const b = document.createElement("div");
     b.className = "card";
     b.innerHTML = `<span class="check">✓</span>
-      <div class="name">${p.name}</div>
+      <div class="name"><span class="plab">${p.letter}.</span> ${p.name}</div>
       <div class="desc">${p.desc}</div>
       <div class="price">${p.price.toLocaleString("ja-JP")}円<span class="unit">/本</span></div>
       <div class="qty">本数
@@ -363,7 +365,7 @@
   FORMATS.forEach(f => {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td class="fmt">${f.fmt}<span class="cond">｜${f.cond}</span></td>
-      <td class="pat"><span class="arrow">→</span>${PATTERNS[f.pat].name}</td>`;
+      <td class="pat"><span class="arrow">→</span>${PATTERNS[f.pat].letter}. ${PATTERNS[f.pat].name}</td>`;
     tr.onclick = () => {
       if (qtys[f.pat] === 0) {
         qtys[f.pat] = 1;
@@ -392,7 +394,7 @@
     const selected = PATTERNS.map((p, i) => ({ p, q: qtys[i] })).filter(x => x.q > 0);
     if (selected.length) {
       lines.push("■制作パターン");
-      selected.forEach(x => lines.push(`・${x.p.name}｜${x.q}本`));
+      lines.push(selected.map(x => `${x.p.letter}：${x.q}本`).join("、"));
     }
     const rate = Number(document.getElementById("rate").value) || 0;
     if (rate) lines.push(`■調整率｜${rate > 0 ? "＋" : "−"}${Math.abs(rate)}%`);
@@ -465,7 +467,7 @@
 
     patBoxR.innerHTML = selected.length
       ? selected.map(p =>
-          `<div class="rrow"><span class="label">${p.short}｜${p.qty}本</span><span class="val">${yen(p.price * p.qty)}</span></div>`
+          `<div class="rrow"><span class="label">${p.letter}. ${p.short}：${p.qty}本</span><span class="val">${yen(p.price * p.qty)}</span></div>`
         ).join("")
       : `<div class="rrow"><span class="label">パターン未選択</span><span class="val">−</span></div>`;
     document.getElementById("rAdjLabel").textContent = rate && selected.length ? `調整（${rate > 0 ? "＋" : "−"}${Math.abs(rate)}%）` : "調整";
