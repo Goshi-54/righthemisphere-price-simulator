@@ -93,12 +93,6 @@
   }
   .std b { color: var(--accent); }
 
-  .opttable { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .opttable td { padding: 10px 12px; border-bottom: 1px solid var(--line); }
-  .opttable tr:last-child td { border-bottom: none; }
-  .opttable .p { text-align: right; font-weight: 700; white-space: nowrap; }
-  .opttable .p .taxin { font-size: 11px; font-weight: 400; color: var(--sub); }
-
   .seplist { display: grid; grid-template-columns: 1fr; gap: 10px; }
   .sepbox {
     border: 2px solid var(--line);
@@ -214,10 +208,10 @@
   <div class="block">
     <h2><span class="num">05.</span>イレギュラー制作</h2>
     <div class="guide">イレギュラー制作オプションです。必要な場合はご相談ください。</div>
-    <table class="opttable">
-      <tr><td>動画編集単体</td><td class="p">8,000円／本<br><span class="taxin">税込 8,800円</span></td></tr>
-      <tr><td>納品後修正・追加編集</td><td class="p">5,000円／本<br><span class="taxin">税込 5,500円</span></td></tr>
-    </table>
+    <div class="seplist">
+      <div class="sepbox"><b>動画編集単体</b><span class="d">｜8,000円／本（税込 8,800円）</span></div>
+      <div class="sepbox"><b>納品後修正・追加編集</b><span class="d">｜5,000円／本（税込 5,500円）</span></div>
+    </div>
     <div class="fnote">※2分以上の動画や、文字数・秒数の指定がある場合は、その分の倍率調整が入ります。</div>
   </div>
 
